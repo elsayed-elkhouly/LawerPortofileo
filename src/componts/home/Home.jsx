@@ -183,7 +183,97 @@ const stagger = {
           ))}
         </motion.div>
       </section>
+<section className="bg-[#0e1a2b] text-white py-10 px-6 md:px-12 font-sans" dir="rtl">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side: Image & Stats */}
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-800">
+              <img
+                src={court}
+                alt="Gavel"
+                className="w-full h-auto object-cover"
+              />
+            </div>
 
+            {/* Success Rate Badge */}
+            <div className="absolute -bottom-6 -left-6 bg-[#c5a059] p-6 rounded-sm text-center min-w-[120px]">
+              <h3 className="text-3xl font-bold text-[#0a1120]">98%</h3>
+              <p className="text-sm text-[#0a1120] font-semibold">نسبة النجاح</p>
+            </div>
+          </div>
+          {/* Right Side: Content */}
+          <div className="space-y-8">
+            <h2 className="text-4xl font-bold mb-10">لماذا يختار النخبة مكتبنا؟</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Feature 1 */}
+              <div className="flex flex-col items-start space-y-3">
+                <div className="flex items-center gap-3">
+                  <PiSealCheck className="text-[#c5a059]" size={28} />
+                  <h4 className="text-xl font-bold">خبرة معمقة</h4>
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  نخبة من خريجي أرقى الجامعات العالمية.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="flex flex-col items-start space-y-3">
+                <div className="flex items-center gap-3">
+                  <MdOutlineLock className="text-[#c5a059]" size={28} />
+                  <h4 className="text-xl font-bold">سرية مطلقة</h4>
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  حماية مشفرة لكافة بيانات الموكلين.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-6 border-r-2 border-[#c5a059] pr-4">
+              <p className="text-gray-300 italic">
+                "نحن نؤمن بأن كل قضية تستحق الاهتمام الكامل"
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* Section Footer Title */}
+        <div className="text-center mt-20">
+          <h2 className="text-3xl font-bold">ثقة الموكلين</h2>
+          <section>
+        <div className="bg-[#0e1a2b] pb-24 px-6 font-sans mt-10" dir="rtl">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6 justify-center items-stretch ">
+            {reviews.map((review, index) => (
+              <div
+                key={index}
+                className={`flex-1 p-8 rounded-sm flex flex-col items-center text-center transition-all hover:border-amber-200 hover:scale-105 duration-300
+              ${review.featured
+                    ? 'bg-[#111c30] border-2 border-gray-800  '
+                    : 'bg-[#0d1626] border border-gray-800 '
+                  }`}
+              >
+                {/* Star Rating */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(review.stars)].map((_, i) => (
+                    <span key={i} className="text-[#c5a059] text-xl">★</span>
+                  ))}
+                </div>
+
+                {/* Testimonial Text */}
+                <p className="text-gray-300 text-lg mb-8 leading-relaxed italic">
+                  "{review.text}"
+                </p>
+
+                {/* Name */}
+                <h4 className="text-white font-bold text-xl mt-auto">
+                  {review.name}
+                </h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+        </div>
+      </section>
       {/* ================= CTA ================= */}
       <section className="bg-[#0e1a2b] px-6 py-12">
         <motion.div
