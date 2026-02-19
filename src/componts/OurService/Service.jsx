@@ -9,6 +9,7 @@ import { PiBuildingOfficeBold } from 'react-icons/pi';
 import { CiCircleCheck } from 'react-icons/ci';
 import { HiLightBulb, HiOutlineChartBarSquare, HiOutlineLightBulb } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 
 const Service = () => {
     const services = [
@@ -49,146 +50,242 @@ const Service = () => {
         { title: "استراتيجية قانونية", desc: "رسم خارطة طريق قانونية واضحة لتحقيق أفضل النتائج.", icon: <HiOutlineLightBulb /> },
         { title: "متابعة حتى النتيجة", desc: "تنفيذ الإجراءات والتمثيل أمام الجهات المختصة بفعالية.", icon: <LuBadgeCheck /> }
     ];
+    const fadeUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const fadeRight = {
+  hidden: { opacity: 0, x: 80 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const fadeLeft = {
+  hidden: { opacity: 0, x: -80 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
     return (
         <>
-            {/* Our legal services / خدماتنا القانونيه */}
-            <section className="bg-[#0e1a2b] py-20 px-6 font-sans text-right" dir="rtl">
-                <div className="max-w-6xl mx-auto">
-                    <div className="mb-12">
-                        <h2 className="text-white text-4xl font-bold mb-4">خدماتنا القانونية</h2>
-                        <p className="text-gray-400">اختر التخصص المناسب وسنقوم بمساعدتك فورًا</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {services.map((item, index) => (
-                            <div
-                                key={index}
-                                className="group bg-[#0d1626] border border-gray-800 p-8 rounded-sm hover:border-[#c5a059] transition-all duration-300"
-                            >
-                                <div className="bg-[#1a2436] w-16 h-16 rounded-full flex items-center justify-center text-[#c5a059] mb-6 group-hover:bg-[#c5a059] group-hover:text-[#0a1120] transition-colors">
-                                    {item.icon}
-                                </div>
-                                <h3 className="text-white text-2xl font-bold mb-4">{item.title}</h3>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-8">
-                                    {item.desc}
-                                </p>
-                                <button className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline cursor-pointer" onClick={() => document.getElementById('my_modal_2').showModal()}>
-                                    <span>عرض التفاصيل</span>
-                                    <BsArrowLeft size={16} /></button>
-                                <dialog id="my_modal_2" className="modal">
-                                    <div className="modal-box">
-                                        <h3 className="font-bold text-lg">Hello!</h3>
-                                        <p className="py-4">Press ESC key or click outside to close</p>
-                                    </div>
-                                    <form method="dialog" className="modal-backdrop">
-                                        <button>close</button>
-                                    </form>
-                                </dialog>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-            {/* Corporate and Contract Law / قانون الشركات والعقود  */}
-            <section className="bg-[#0e1a2b] py-20 px-6" dir="rtl">
-                <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-                    {/* Text Content */}
-                    <div className="lg:w-1/2 text-right">
-                        <h2 className="text-white text-4xl font-bold mb-6">قانون الشركات والعقود</h2>
-                        <p className="text-gray-400 mb-8 leading-relaxed">
-                            نقدم حلولاً قانونية شاملة لدعم نمو أعمالكم وحمايتها من المخاطر القانونية المحتملة.
-                        </p>
+  {/* ================= Services ================= */}
+  <section className="bg-[#0e1a2b] py-20 px-6 text-right" dir="rtl">
+    <div className="max-w-6xl mx-auto">
 
-                        <ul className="space-y-4 mb-10">
-                            {[
-                                "صياغة ومراجعة العقود التجارية الدولية والمحلية.",
-                                "تمثيل الشركات في المفاوضات وعمليات الاستحواذ.",
-                                "الاستشارات الضريبية والتنظيمية للشركات الكبرى."
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-gray-300">
-                                    <CiCircleCheck
-                                        className="text-[#c5a059] shrink-0 text-2xl" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        transition={{ duration: 0.7 }}
+        className="mb-12"
+      >
+        <h2 className="text-white text-4xl font-bold mb-4">
+          خدماتنا القانونية
+        </h2>
+        <p className="text-gray-400">
+          اختر التخصص المناسب وسنقوم بمساعدتك فورًا
+        </p>
+      </motion.div>
 
-                        <Link to={"/BookingDate"} ><button className="bg-[#c5a059] text-[#0a1120] px-8 py-3 font-bold hover:bg-[#b08e4d] transition-all">
-                            احجز استشارة لهذه الخدمة
-                        </button></Link>
-                    </div>
-                    {/* Lawyer Image */}
-                    <div className="lg:w-1/2">
-                        <img
-                            src={lawerphoto}
-                            alt="قانون الشركات والعقود"
-                            className="rounded-sm shadow-2xl border border-gray-800"
-                        />
-                    </div>
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {services.map((item, index) => (
+          <motion.div
+            key={index}
+            variants={fadeUp}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
+            className="group bg-[#0d1626] border border-gray-800 p-8 rounded-sm hover:border-[#c5a059]"
+          >
+            <div className="bg-[#1a2436] w-16 h-16 rounded-full flex items-center justify-center text-[#c5a059] mb-6 group-hover:bg-[#c5a059] group-hover:text-[#0a1120] transition-colors">
+              {item.icon}
+            </div>
 
+            <h3 className="text-white text-2xl font-bold mb-4">
+              {item.title}
+            </h3>
 
-                </div>
-            </section>
-            {/* Methodology / منهجية العمل  */}
-            <section className="bg-[#0e1a2b] py-20 px-6 text-center" dir="rtl">
-                <h2 className="text-white text-3xl font-bold mb-2">منهجية العمل</h2>
-                <div className="w-16 h-1 bg-[#c5a059] mx-auto mb-16"></div>
-                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 ">
-                    {steps.map((step, i) => (
-                        <div key={i} className="bg-[#0d1626] p-8 rounded-sm border border-gray-800 flex flex-col items-center hover:scale-105 duration-300 overflow-hidden">
-                            <div className="text-2xl bg-[#c5a059] text-[#0a1120] w-12 h-12 flex items-center justify-center rounded-full mb-6">
-                                {step.icon}
-                            </div>
-                            <h3 className="text-white text-xl font-bold mb-4">{step.title}</h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-            {/* Asked Questions / الأسئلة الشائعة  */}
-            <section className="bg-[#0e1a2b] py-20 px-6 text-center">
-                <h2 className="text-white text-3xl font-bold mb-2"> الأسئلة الشائعة</h2>
-                <div className=' w-full lg:w-3/4 flex justify-center items-center flex-col gap-2 mx-auto py-10'>
-                    <div className="collapse collapse-arrow bg-[#162132] border border-[#C9A14A33] text-right">
-                        <input type="radio" name="my-accordion-2" defaultChecked />
-                        <div className="collapse-title font-semibold text-white  py-8 text-2xl">كيف يمكنني حجز موعد استشارة؟</div>
-                        <div className="collapse-content text-l text-[#9CA3AF] pt-3 me-5  ">يمكنك الحجز بسهولة عبر نموذج التواصل في الموقع أو الاتصال مباشرة بفريقنا عبر الأرقام الموضحة.</div>
-                    </div>
-                    <div className="collapse collapse-arrow bg-[#162132] border border-[#C9A14A33] text-right ">
-                        <input type="radio" name="my-accordion-2" />
-                        <div className="collapse-title font-semibold text-white text-2xl py-8">ما هي تكلفة الخدمات القانونية؟</div>
-                        <div className="collapse-content text-sm text-[#9CA3AF] me-5">الخدمات القانونية تُحدد وفقًا لاحتياج كل عميل، وتُقدَّر تكلفتها باعتبارها استثمار يعكس القيمة والحماية القانونية التي سيحصل عليها</div>
-                    </div>
-                    <div className="collapse collapse-arrow bg-[#162132] border border-[#C9A14A33] text-right">
-                        <input type="radio" name="my-accordion-2" />
-                        <div className="collapse-title font-semibold text-white text-2xl py-8">هل تقدمون استشارات عن بعد؟</div>
-                        <div className="collapse-content text-sm text-[#9CA3AF] me-5">نعم، نُقدّم استشارات عن بُعد، لتيسير التواصل مع عملائنا وضمان تجربة احترافية ترتقي لأعلى معايير خدمة العملاء، لأن راحتهم وثقتهم هي أولويتنا</div>
-                    </div>
-                </div>
+            <p className="text-gray-400 text-sm leading-relaxed mb-8">
+              {item.desc}
+            </p>
 
+            <motion.button
+              whileHover={{ x: -5 }}
+              className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline"
+            >
+              عرض التفاصيل
+            </motion.button>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  </section>
 
-            </section>
-            {/* last section */}
-            <section className="bg-[#0e1a2b] px-6 py-12" dir="rtl">
-                <div className=" bg-[#14243a] max-w-6xl mx-auto border-2 border-[#c5a059] p-12 relative overflow-hidden flex flex-col items-center text-center">
+  {/* ================= Corporate Law ================= */}
+  <section className="bg-[#0e1a2b] py-20 px-6" dir="rtl">
+    <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
-                    {/* Background Watermark Icon */}
-                    <FaBalanceScale
-                        size={180}
-                        className="absolute -bottom-3 right-3 text-white opacity-5  pointer-events-none"
-                    />
+      <motion.div
+        variants={fadeRight}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="lg:w-1/2 text-right"
+      >
+        <h2 className="text-white text-4xl font-bold mb-6">
+          قانون الشركات والعقود
+        </h2>
 
-                    <h2 className="text-white text-4xl md:text-5xl font-bold mb-8 z-10">
-                        هل تحتاج إلى محامي الآن؟                      </h2>
+        <p className="text-gray-400 mb-8 leading-relaxed">
+          نقدم حلولاً قانونية شاملة لدعم نمو أعمالكم وحمايتها من المخاطر القانونية المحتملة.
+        </p>
 
-                    <Link to={"/BookingDate"}><button className="bg-[#c5a059] hover:bg-[#b08e4d] text-[#0a1120] font-bold py-4 px-10 text-lg transition-colors z-10">
-                        احجز استشارتك الآن
-                    </button></Link>
+        <motion.ul
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="space-y-4 mb-10"
+        >
+          {[
+            "صياغة ومراجعة العقود التجارية الدولية والمحلية.",
+            "تمثيل الشركات في المفاوضات وعمليات الاستحواذ.",
+            "الاستشارات الضريبية والتنظيمية للشركات الكبرى."
+          ].map((item, i) => (
+            <motion.li
+              key={i}
+              variants={fadeUp}
+              className="flex items-center gap-3 text-gray-300"
+            >
+              <span>{item}</span>
+            </motion.li>
+          ))}
+        </motion.ul>
 
-                    <p className="text-gray-400 mt-6 text-sm z-10">
-                        سرية تامة – رد سريع – دعم كامل                      </p>
-                </div>
-            </section>
-        </>
+      <Link to={"/BookingDate"}>  <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-[#c5a059] text-[#0a1120] px-8 py-3 font-bold cursor-pointer"
+        >
+          احجز استشارة لهذه الخدمة
+        </motion.button></Link>
+      </motion.div>
+
+      <motion.div
+        variants={fadeLeft}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="lg:w-1/2"
+      >
+        <img
+          src={lawerphoto}
+          alt=""
+          className="rounded-sm shadow-2xl border border-gray-800"
+        />
+      </motion.div>
+    </div>
+  </section>
+
+  {/* ================= Methodology ================= */}
+  <section className="bg-[#0e1a2b] py-20 px-6 text-center" dir="rtl">
+    <motion.h2
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+      className="text-white text-3xl font-bold mb-16"
+    >
+      منهجية العمل
+    </motion.h2>
+
+    <motion.div
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8"
+    >
+      {steps.map((step, i) => (
+        <motion.div
+          key={i}
+          variants={fadeUp}
+          whileHover={{ scale: 1.05 }}
+          className="bg-[#0d1626] p-8 border border-gray-800"
+        >
+          <h3 className="text-white text-xl font-bold mb-4">
+            {step.title}
+          </h3>
+          <p className="text-gray-400 text-sm">
+            {step.desc}
+          </p>
+        </motion.div>
+      ))}
+    </motion.div>
+  </section>
+
+  {/* ================= FAQ ================= */}
+  <section className="bg-[#0e1a2b] py-20 px-6 text-center">
+    <motion.h2
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="text-white text-3xl font-bold mb-10"
+    >
+      الأسئلة الشائعة
+    </motion.h2>
+
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="w-full lg:w-3/4 mx-auto"
+    >
+    </motion.div>
+  </section>
+
+  <section className="bg-[#0e1a2b] px-6 py-12" dir="rtl">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="bg-[#14243a] max-w-6xl mx-auto border-2 border-[#c5a059] p-12 text-center"
+    >
+      <h2 className="text-white text-4xl font-bold mb-8">
+        هل تحتاج إلى محامي الآن؟
+      </h2>
+
+      <Link to={"/BookingDate"}><motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-[#c5a059] text-[#0a1120] font-bold py-4 px-10"
+      >
+        احجز استشارتك الآن
+      </motion.button></Link>
+    </motion.div>
+  </section>
+</>
+
     )
 }
 
