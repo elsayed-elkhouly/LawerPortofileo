@@ -218,7 +218,7 @@ const BookDate = () => {
                                 </p>
 
                                 <a
-                                    href="https://wa.me/201025726565"
+                                    href="https://wa.me/201553132233"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-between bg-[#071d1a] border border-green-900/30 rounded-xl p-4 px-6 transition-all hover:border-green-500/50 group cursor-pointer hover:scale-[1.01] active:scale-[0.98]"
