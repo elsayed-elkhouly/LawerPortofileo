@@ -1,5 +1,6 @@
 import React from 'react'
-import {  BiCalendarAlt, BiCheckCircle, BiChevronDownCircle, BiLockAlt, BiMapPin,  BiPhoneCall, BiUser, } from 'react-icons/bi'
+import { useForm } from 'react-hook-form'
+import { BiCalendarAlt, BiCheckCircle, BiChevronDownCircle, BiLockAlt, BiMapPin, BiPhoneCall, BiUser, } from 'react-icons/bi'
 import { BsChevronDown } from 'react-icons/bs'
 import { CgLock, CgLockUnlock } from 'react-icons/cg'
 import { GoShieldCheck } from 'react-icons/go'
@@ -28,6 +29,16 @@ const BookDate = () => {
             desc: "سجل حافل بالنجاحات في أصعب القضايا التجارية والجنائية.",
         },
     ];
+    const { handleSubmit, register } = useForm({
+
+    })
+
+    async function Signup(values) {
+        console.log(values);
+
+
+
+    }
     return (
         <>
             <section
@@ -51,7 +62,8 @@ const BookDate = () => {
                         <div className="lg:col-span-2 bg-[#0a111a] border border-gray-800/50 rounded-3xl p-5 sm:p-6 md:p-10 lg:p-12 shadow-2xl">
 
                             <div className=" border border-gray-800/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-                                <form className="space-y-8">
+                                <form onSubmit={handleSubmit(Signup)}
+                                    className="space-y-8">
                                     {/* Row 1: Name and Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
@@ -61,6 +73,7 @@ const BookDate = () => {
                                                     type="text"
                                                     placeholder="أدخل اسمك الثلاثي"
                                                     className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 outline-none transition-all placeholder:text-gray-600"
+                                                {...register("name")}
                                                 />
                                                 <BiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                             </div>
@@ -74,7 +87,7 @@ const BookDate = () => {
                                                         type="tel"
                                                         placeholder="5xxxxxxx"
                                                         className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                    />
+                                                   {...register("phone")} />
                                                     <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                                 </div>
                                                 <div className="bg-[#111927] border border-gray-700/50 border-r-0 rounded-l-xl px-4 flex items-center text-gray-300 text-sm">
@@ -93,7 +106,7 @@ const BookDate = () => {
                                                     type="email"
                                                     placeholder="example@domain.com"
                                                     className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 text-left"
-                                                />
+                                               {...register("email")} />
                                                 <RiMicAiLine className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                             </div>
                                         </div>
@@ -125,7 +138,7 @@ const BookDate = () => {
                                                     placeholder="mm/dd/yyyy"
                                                     onFocus={(e) => (e.target.type = "date")}
                                                     className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                />
+                                               {...register("date")} />
                                                 <BiCalendarAlt className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                             </div>
                                         </div>
@@ -139,6 +152,7 @@ const BookDate = () => {
                                                     </option>
                                                     <option>09:00 AM - 12:00 PM</option>
                                                     <option>01:00 PM - 04:00 PM</option>
+                                               
                                                 </select>
                                                 <CgLockUnlock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                                 <BiChevronDownCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
@@ -153,7 +167,7 @@ const BookDate = () => {
                                             rows="4"
                                             placeholder="يرجى كتابة تفاصيل مختصرة عن موضوع الاستشارة لنقوم بتوجيهك للمستشار المناسب..."
                                             className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-6 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 resize-none"
-                                        ></textarea>
+                                        {...register("text")}></textarea>
                                     </div>
 
                                     {/* Submit Button */}

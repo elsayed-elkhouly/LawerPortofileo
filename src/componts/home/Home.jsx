@@ -5,13 +5,14 @@ import court from "../../assets/images/6c2789f4869af593f01bba4755810d65f972e8ca.
 import { GoShieldCheck } from 'react-icons/go'
 import { TfiMedall } from 'react-icons/tfi'
 import { TbBuildingBank } from 'react-icons/tb'
-import { MdElectricBolt, MdOutlineLock } from 'react-icons/md'
+import { MdElectricBolt, MdOutlineChat, MdOutlineElectricBolt, MdOutlineLock } from 'react-icons/md'
 import { FaBalanceScale, FaBuilding, FaGraduationCap, FaUsers } from 'react-icons/fa'
 import { BsShieldCheck } from 'react-icons/bs'
 import { SiCalendly } from 'react-icons/si'
 import { PiSealCheck } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { motion } from "framer-motion";
+import { LiaMedalSolid } from 'react-icons/lia'
 
 const Home = () => {
   const reviews = [
@@ -35,34 +36,34 @@ const Home = () => {
     }
   ];
   const fadeLeft = {
-  hidden: { opacity: 0, x: -80 },
-  visible: { opacity: 1, x: 0 }
-};
+    hidden: { opacity: 0, x: -80 },
+    visible: { opacity: 1, x: 0 }
+  };
 
-const fadeRight = {
-  hidden: { opacity: 0, x: 80 },
-  visible: { opacity: 1, x: 0 }
-};
+  const fadeRight = {
+    hidden: { opacity: 0, x: 80 },
+    visible: { opacity: 1, x: 0 }
+  };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 }
-};
+  const fadeUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 }
+  };
 
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2
+  const stagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2
+      }
     }
-  }
-};
+  };
   return (
     <>
       {/* ================= ABOUT SECTION ================= */}
       <section className="bg-[#0e1a2b] pt-20">
         <div className="lg:flex lg:items-center lg:justify-around">
-          
+
           {/* Image */}
           <motion.div
             variants={fadeLeft}
@@ -127,9 +128,9 @@ const stagger = {
           className="flex flex-col lg:flex-row gap-5 py-10 lg:justify-around"
         >
           {[
-            { number: "89%", text: "نتائج قانونية مبهرة" },
-            { number: "24h", text: "سرعة في التنفيذ والاستجابة" },
-            { number: "20+", text: "عاماً من السلطة القانونية" }
+            { number: "89%", text: "نتائج قانونية مبهرة", icon: <LiaMedalSolid /> },
+            { number: "24h", text: "سرعة في التنفيذ والاستجابة", icon: <MdOutlineElectricBolt /> },
+            { number: "20+", text: "عاماً من السلطة القانونية", icon: <MdOutlineChat />  }
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -137,6 +138,7 @@ const stagger = {
               transition={{ duration: 0.6 }}
               className="flex flex-col items-center"
             >
+              <i className='text-[#C9A24D] text-3xl'>{item.icon}</i>
               <p className="text-[#C9A24D] text-[56px] font-bold">
                 {item.number}
               </p>
@@ -183,7 +185,7 @@ const stagger = {
           ))}
         </motion.div>
       </section>
-<section className="bg-[#0e1a2b] text-white py-10 px-6 md:px-12 font-sans" dir="rtl">
+      <section className="bg-[#0e1a2b] text-white py-10 px-6 md:px-12 font-sans" dir="rtl">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side: Image & Stats */}
           <div className="relative">
@@ -240,38 +242,38 @@ const stagger = {
         <div className="text-center mt-20">
           <h2 className="text-3xl font-bold">ثقة الموكلين</h2>
           <section>
-        <div className="bg-[#0e1a2b] pb-24 px-6 font-sans mt-10" dir="rtl">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6 justify-center items-stretch ">
-            {reviews.map((review, index) => (
-              <div
-                key={index}
-                className={`flex-1 p-8 rounded-sm flex flex-col items-center text-center transition-all hover:border-amber-200 hover:scale-105 duration-300
+            <div className="bg-[#0e1a2b] pb-24 px-6 font-sans mt-10" dir="rtl">
+              <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6 justify-center items-stretch ">
+                {reviews.map((review, index) => (
+                  <div
+                    key={index}
+                    className={`flex-1 p-8 rounded-sm flex flex-col items-center text-center transition-all hover:border-amber-200 hover:scale-105 duration-300
               ${review.featured
-                    ? 'bg-[#111c30] border-2 border-gray-800  '
-                    : 'bg-[#0d1626] border border-gray-800 '
-                  }`}
-              >
-                {/* Star Rating */}
-                <div className="flex gap-1 mb-6">
-                  {[...Array(review.stars)].map((_, i) => (
-                    <span key={i} className="text-[#c5a059] text-xl">★</span>
-                  ))}
-                </div>
+                        ? 'bg-[#111c30] border-2 border-gray-800  '
+                        : 'bg-[#0d1626] border border-gray-800 '
+                      }`}
+                  >
+                    {/* Star Rating */}
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(review.stars)].map((_, i) => (
+                        <span key={i} className="text-[#c5a059] text-xl">★</span>
+                      ))}
+                    </div>
 
-                {/* Testimonial Text */}
-                <p className="text-gray-300 text-lg mb-8 leading-relaxed italic">
-                  "{review.text}"
-                </p>
+                    {/* Testimonial Text */}
+                    <p className="text-gray-300 text-lg mb-8 leading-relaxed italic">
+                      "{review.text}"
+                    </p>
 
-                {/* Name */}
-                <h4 className="text-white font-bold text-xl mt-auto">
-                  {review.name}
-                </h4>
+                    {/* Name */}
+                    <h4 className="text-white font-bold text-xl mt-auto">
+                      {review.name}
+                    </h4>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
         </div>
       </section>
       {/* ================= CTA ================= */}
@@ -301,7 +303,7 @@ const stagger = {
     </>
   );
 }
-  
+
 
 
 export default Home
