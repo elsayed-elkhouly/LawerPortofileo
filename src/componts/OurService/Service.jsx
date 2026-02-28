@@ -110,8 +110,8 @@ const Service = () => {
     <>
 
       {/* ================= Services ================= */}
-      <section className="bg-[#0e1a2b] py-20 px-6 text-right" dir="rtl">
-        <div className="max-w-6xl mx-auto">
+      <section className="bg-[#0e1a2b] py-20 px-6 text-right " dir="rtl">
+        <div className="w-full px-4 sm:px-6 md:max-w-6xl md:mx-auto">
 
           <motion.div
             initial="hidden"
@@ -165,52 +165,56 @@ const Service = () => {
                 </motion.button>
 
                 <dialog
-  id={`modal_${index}`}
-  className="modal p-0"
-  onClick={(e) => {
-    if (e.target === e.currentTarget) {
-      const modal = document.getElementById(`modal_${index}`);
-      modal.classList.add("closing");
-      setTimeout(() => modal.close(), 300);
-    }
-  }}
->
-  <div
-    className="
-      w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%]
-      max-w-xl sm:max-w-2xl
-      bg-[#111827] rounded-3xl sm:rounded-[2.5rem]
-      p-4 sm:p-6 md:p-10 lg:p-12
-      text-right shadow-2xl border border-gray-800
-      mx-auto
-      overflow-y-auto max-h-[90vh]
-    "
-    dir="rtl"
-  >
-    {/* Header */}
-    <div className="mb-6 sm:mb-8 mt-2 sm:mt-4">
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-        قانون الشركات والعقود
-      </h2>
-      <div className="h-1 w-16 sm:w-20 bg-[#c5a059] rounded-full"></div>
-    </div>
+                  id={`modal_${index}`}
+                  className="modal p-0"
+                 onClick={(e) => {
+  if (e.target === e.currentTarget) {
+    const modal = document.getElementById(`modal_${index}`);
+    modal.classList.add("closing");
+    setTimeout(() => modal.close(), 300);
+  }
+}}
 
-    {/* Description */}
-    <p className="text-gray-300 leading-relaxed mb-8 sm:mb-10 text-sm sm:text-base md:text-lg">
-      نقدم خدمات شاملة في صياغة ومراجعة العقود التجارية،
-      وتأسيس الشركات بكافة أنواعها،
-      مع ضمان الامتثال الكامل للقوانين واللوائح
-      المحلية والدولية لحماية مصالح أعمالكم.
-    </p>
+                >
+                  <div
+                    className="
+        w-[92%] sm:w-full
+        max-w-lg
+        bg-[#111827]
+        rounded-3xl sm:rounded-[2.5rem]
+        p-6 sm:p-8 md:p-12
+        text-right
+        shadow-2xl
+        border border-gray-800
+        mx-auto
+      "
+                    dir="rtl"
+                  >
+                    {/* Header */}
+                    <div className="mb-6 sm:mb-8 mt-2 sm:mt-4">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                        قانون الشركات والعقود
+                      </h2>
+                      <div className="h-1 w-16 sm:w-20 bg-[#c5a059] rounded-full"></div>
+                    </div>
 
-    {/* CTA Button */}
-    <NavLink to="/BookingDate">
-      <button className="w-full py-3 sm:py-4 md:py-5 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20 md:text-lg">
-        احجز استشارة لهذه الخدمة
-      </button>
-    </NavLink>
-  </div>
-</dialog>
+                    {/* Description */}
+                    <p className="text-gray-300 leading-relaxed mb-8 sm:mb-10 text-sm sm:text-base">
+                      نقدم خدمات شاملة في صياغة ومراجعة العقود التجارية،
+                      وتأسيس الشركات بكافة أنواعها،
+                      مع ضمان الامتثال الكامل للقوانين واللوائح
+                      المحلية والدولية لحماية مصالح أعمالكم.
+                    </p>
+
+                    {/* CTA Button */}
+                    <NavLink to="/BookingDate">
+                     <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
+                      احجز استشارة لهذه الخدمة
+                    </button>
+                    </NavLink>
+                    
+                  </div>
+                </dialog>
               </motion.div>
             ))}
           </motion.div>
