@@ -8,7 +8,7 @@ import { MdGavel, MdOutlineChat } from 'react-icons/md';
 import { PiBuildingOfficeBold } from 'react-icons/pi';
 import { CiCircleCheck } from 'react-icons/ci';
 import { HiLightBulb, HiOutlineChartBarSquare, HiOutlineLightBulb } from 'react-icons/hi2';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { CgLayoutGrid } from 'react-icons/cg';
 
@@ -108,7 +108,7 @@ const Service = () => {
   };
   return (
     <>
-    
+
       {/* ================= Services ================= */}
       <section className="bg-[#0e1a2b] py-20 px-6 text-right" dir="rtl">
         <div className="max-w-6xl mx-auto">
@@ -158,20 +158,23 @@ const Service = () => {
 
                 <motion.button
                   whileHover={{ x: -5 }}
-                  onClick={() => document.getElementById("my_modal_2").showModal()}
+                  onClick={() => document.getElementById(`modal_${index}`).showModal()}
                   className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline"
                 >
                   عرض التفاصيل
                 </motion.button>
 
                 <dialog
-                  id="my_modal_2"
+                  id={`modal_${index}`}
                   className="modal p-0"
                   onClick={(e) => {
                     if (e.target === e.currentTarget) {
-                      document.getElementById("my_modal_2").close();
+                      const modal = document.getElementById(`modal_${index}`);
+                      modal.classList.add("closing");
+                      setTimeout(() => modal.close(), 300);
                     }
                   }}
+
                 >
                   <div
                     className="
@@ -204,9 +207,12 @@ const Service = () => {
                     </p>
 
                     {/* CTA Button */}
-                    <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
-                      احجز استشارة لهذه الخدمة
-                    </button>
+                    <NavLink to="/BookingDate">
+                      <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
+                        احجز استشارة لهذه الخدمة
+                      </button>
+                    </NavLink>
+
                   </div>
                 </dialog>
               </motion.div>

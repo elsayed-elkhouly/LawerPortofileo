@@ -66,7 +66,7 @@ const Navbar = () => {
 
       {/* قائمة الموبايل */}
       {menuOpen && (
-        <div className="flex flex-col gap-2 mt-20 bg-[#14243a] p-4 lg:hidden fixed w-52 z-50 shadow rounded-r-lg">
+        <div className="flex flex-col gap-2 mt-20 bg-[#14243a] p-4 lg:hidden fixed w-52 z-50 shadow rounded-3xl">
           <NavLink to="/" onClick={closeMenu}>
             <p className="p-3 text-[#C9A24D] hover:bg-[#28364a] rounded-2xl text-center">الرئيسية</p>
           </NavLink>
