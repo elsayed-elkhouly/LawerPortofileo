@@ -60,7 +60,6 @@ const BookDate = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
                         {/* FORM */}
                         <div className="lg:col-span-2 bg-[#0a111a] border border-gray-800/50 rounded-3xl p-5 sm:p-6 md:p-10 lg:p-12 shadow-2xl">
-
                             <div className=" border border-gray-800/50 rounded-3xl p-8 md:p-12 shadow-2xl">
                                 <form onSubmit={handleSubmit(Signup)}
                                     className="space-y-8">

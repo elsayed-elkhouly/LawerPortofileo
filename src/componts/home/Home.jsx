@@ -1,14 +1,8 @@
 import React from 'react'
 import Navbar from '../navbar/Navbar'
-import photo1 from "../../assets/images/ede1b7d10d8859f102445bc817be8806da250fe1.png"
+import photo1 from "../../assets/images/mainPhoto.png"
 import court from "../../assets/images/6c2789f4869af593f01bba4755810d65f972e8ca.jpg"
-import { GoShieldCheck } from 'react-icons/go'
-import { TfiMedall } from 'react-icons/tfi'
-import { TbBuildingBank } from 'react-icons/tb'
-import { MdElectricBolt, MdOutlineChat, MdOutlineElectricBolt, MdOutlineLock } from 'react-icons/md'
-import { FaBalanceScale, FaBuilding, FaGraduationCap, FaUsers } from 'react-icons/fa'
-import { BsShieldCheck } from 'react-icons/bs'
-import { SiCalendly } from 'react-icons/si'
+import { MdOutlineChat, MdOutlineElectricBolt, MdOutlineLock } from 'react-icons/md'
 import { PiSealCheck } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { motion } from "framer-motion";

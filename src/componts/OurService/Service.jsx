@@ -108,6 +108,7 @@ const Service = () => {
   };
   return (
     <>
+    
       {/* ================= Services ================= */}
       <section className="bg-[#0e1a2b] py-20 px-6 text-right" dir="rtl">
         <div className="max-w-6xl mx-auto">
@@ -157,65 +158,57 @@ const Service = () => {
 
                 <motion.button
                   whileHover={{ x: -5 }}
+                  onClick={() => document.getElementById("my_modal_2").showModal()}
                   className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline"
                 >
-                  <button className="" onClick={() => document.getElementById('my_modal_2').showModal()}> عرض التفاصيل
-                  </button>
-                  <dialog id="my_modal_2" className="modal">
-                    <div className="modal-box h-full bg-transparent ">
-                      <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm p-4">
-                        {/* Modal Container */}
-                        <div className="relative w-full max-w-lg bg-[#111827] rounded-[2.5rem] p-8 md:p-12 text-right shadow-2xl border border-gray-800" dir="rtl">
-                          {/* Header */}
-                          <div className="mb-8 mt-4">
-                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                              قانون الشركات والعقود
-                            </h2>
-                            <div className="h-1 w-20 bg-[#c5a059] rounded-full"></div>
-                          </div>
-
-                          {/* Description */}
-                          <p className="text-gray-300 leading-relaxed mb-10 text-sm md:text-base">
-                            نقدم خدمات شاملة في صياغة ومراجعة العقود التجارية، وتأسيس الشركات بكافة أنواعها،
-                            مع ضمان الامتثال الكامل للقوانين واللوائح المحلية والدولية لحماية مصالح أعمالكم.
-                          </p>
-
-                          {/* Services List */}
-                          {/* <div className="space-y-6 mb-10">
-                            <div className="flex items-center gap-2 text-[#c5a059] font-semibold mb-4">
-                              <CgLayoutGrid size={18} />
-                              <span>الخدمات داخل القسم</span>
-                            </div>
-
-                            <ul className="space-y-4">
-                              {[
-                                "تأسيس الشركات وتعديل عقود التأسيس",
-                                "صياغة ومراجعة العقود والاتفاقيات التجارية",
-                                "الاندماج والاستحواذ وإعادة الهيكلة",
-                                "تمثيل الشركات في المفاوضات القانونية"
-                              ].map((item, index) => (
-                                <li key={index} className="flex items-center justify-between text-gray-200 group">
-                                  <span className="text-sm md:text-base group-hover:text-white transition-colors">
-                                    {item}
-                                  </span>
-                                  <BiCheckCircle size={18} className="text-[#c5a059]" />
-                                </li>
-                              ))}
-                            </ul>
-                          </div> */}
-
-                          {/* CTA Button */}
-                          <button className="w-full py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
-                            احجز استشارة لهذه الخدمة
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
+                  عرض التفاصيل
                 </motion.button>
+
+                <dialog
+                  id="my_modal_2"
+                  className="modal p-0"
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                      document.getElementById("my_modal_2").close();
+                    }
+                  }}
+                >
+                  <div
+                    className="
+        w-[92%] sm:w-full
+        max-w-lg
+        bg-[#111827]
+        rounded-3xl sm:rounded-[2.5rem]
+        p-6 sm:p-8 md:p-12
+        text-right
+        shadow-2xl
+        border border-gray-800
+        mx-auto
+      "
+                    dir="rtl"
+                  >
+                    {/* Header */}
+                    <div className="mb-6 sm:mb-8 mt-2 sm:mt-4">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                        قانون الشركات والعقود
+                      </h2>
+                      <div className="h-1 w-16 sm:w-20 bg-[#c5a059] rounded-full"></div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-300 leading-relaxed mb-8 sm:mb-10 text-sm sm:text-base">
+                      نقدم خدمات شاملة في صياغة ومراجعة العقود التجارية،
+                      وتأسيس الشركات بكافة أنواعها،
+                      مع ضمان الامتثال الكامل للقوانين واللوائح
+                      المحلية والدولية لحماية مصالح أعمالكم.
+                    </p>
+
+                    {/* CTA Button */}
+                    <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
+                      احجز استشارة لهذه الخدمة
+                    </button>
+                  </div>
+                </dialog>
               </motion.div>
             ))}
           </motion.div>
