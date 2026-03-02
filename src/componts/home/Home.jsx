@@ -192,7 +192,7 @@ const Home = () => {
             </div>
 
             {/* Success Rate Badge */}
-            <div className="absolute -bottom-6 -left-6 bg-[#c5a059] p-6 rounded-sm text-center min-w-[120px]">
+            <div className="absolute -bottom-6 -left-6 bg-[#c5a059] p-6 rounded-sm text-center min-w-30">
               <h3 className="text-3xl font-bold text-[#0a1120]">98%</h3>
               <p className="text-sm text-[#0a1120] font-semibold">نسبة النجاح</p>
             </div>

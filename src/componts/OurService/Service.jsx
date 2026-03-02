@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import lawerphoto from "../../assets/images/df9c79f70121aee15fd66c884f20ff8e825dc552.jpg"
 import { BiBriefcase, BiCheckCircle, BiHome } from 'react-icons/bi';
 import { BsArrowLeft } from 'react-icons/bs';
@@ -13,6 +13,8 @@ import { motion } from "framer-motion";
 import { CgLayoutGrid } from 'react-icons/cg';
 
 const Service = () => {
+  const [selectedService, setSelectedService] = useState(null);
+
   const services = [
     {
       title: "القانون الجنائي",
@@ -110,93 +112,87 @@ const Service = () => {
     <>
 
       {/* ================= Services ================= */}
-      <section className="bg-[#0e1a2b] py-20 px-6 text-right " dir="rtl">
-        <div className="w-full px-4 sm:px-6 md:max-w-6xl md:mx-auto">
+      <section className="bg-[#0e1a2b] py-20 px-6 text-right" dir="rtl">
+  <div className="w-full px-4 sm:px-6 md:max-w-6xl md:mx-auto">
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.7 }}
-            className="mb-12"
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      transition={{ duration: 0.7 }}
+      className="mb-12"
+    >
+      <h2 className="text-white text-4xl font-bold mb-4">
+        خدماتنا القانونية
+      </h2>
+      <p className="text-gray-400">
+        اختر التخصص المناسب وسنقوم بمساعدتك فورًا
+      </p>
+    </motion.div>
+
+    <motion.div
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {services.map((item, index) => (
+        <motion.div
+          key={index}
+          variants={fadeUp}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+          className="group bg-[#0d1626] border border-gray-800 p-8 rounded-sm hover:border-[#c5a059]"
+        >
+          <div className="bg-[#1a2436] w-16 h-16 rounded-full flex items-center justify-center text-[#c5a059] mb-6 group-hover:bg-[#c5a059] group-hover:text-[#0a1120] transition-colors">
+            {item.icon}
+          </div>
+
+          <h3 className="text-white text-2xl font-bold mb-4">
+            {item.title}
+          </h3>
+
+          <p className="text-gray-400 text-sm leading-relaxed mb-8">
+            {item.desc}
+          </p>
+
+          <motion.button
+           whileHover={{ x: -5 }}
+            className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline cursor-pointer"
+            onClick={() => setSelectedService(item)}
           >
-            <h2 className="text-white text-4xl font-bold mb-4">
-              خدماتنا القانونية
-            </h2>
-            <p className="text-gray-400">
-              اختر التخصص المناسب وسنقوم بمساعدتك فورًا
-            </p>
-          </motion.div>
+            عرض التفاصيل
+          </motion.button>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {services.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeUp}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.5 }}
-                className="group bg-[#0d1626] border border-gray-800 p-8 rounded-sm hover:border-[#c5a059]"
-              >
-                <div className="bg-[#1a2436] w-16 h-16 rounded-full flex items-center justify-center text-[#c5a059] mb-6 group-hover:bg-[#c5a059] group-hover:text-[#0a1120] transition-colors">
-                  {item.icon}
-                </div>
+  {/* ===== Modal (واحد بس برا الـ map) ===== */}
+  {selectedService && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+    onClick={() => setSelectedService(null)}   // 👈 يقفل لو ضغطت برا
+  >
+    <div
+      className="bg-[#0d1626] p-8 rounded-lg w-[90%] md:w-[500px] relative border border-gray-800 shadow-2xl rounded-3xl sm:rounded-[2.5rem]"
+      onClick={(e) => e.stopPropagation()}     // 👈 يمنع القفل لو ضغطت جوه
+    >
+      
 
-                <h3 className="text-white text-2xl font-bold mb-4">
-                  {item.title}
-                </h3>
+      
 
-                <p className="text-gray-400 text-sm leading-relaxed mb-8">
-                  {item.desc}
-                </p>
 
-                <motion.button
-                  whileHover={{ x: -5 }}
-                  onClick={() => document.getElementById(`modal_${index}`).showModal()}
-                  className="flex items-center gap-2 text-[#c5a059] font-semibold text-sm hover:underline"
-                >
-                  عرض التفاصيل
-                </motion.button>
-
-                <dialog
-                  id={`modal_${index}`}
-                  className="modal p-0"
-                 onClick={(e) => {
-  if (e.target === e.currentTarget) {
-    const modal = document.getElementById(`modal_${index}`);
-    modal.classList.add("closing");
-    setTimeout(() => modal.close(), 300);
-  }
-}}
-
-                >
-                  <div
-                    className="
-        w-[92%] sm:w-full
-        max-w-lg
-        bg-[#111827]
-        rounded-3xl sm:rounded-[2.5rem]
-        p-6 sm:p-8 md:p-12
-        text-right
-        shadow-2xl
-        border border-gray-800
-        mx-auto
-      "
-                    dir="rtl"
-                  >
+        
                     {/* Header */}
-                    <div className="mb-6 sm:mb-8 mt-2 sm:mt-4">
+                     <div className="mb-6 sm:mb-8 mt-2 sm:mt-4">
                       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
                         قانون الشركات والعقود
                       </h2>
                       <div className="h-1 w-16 sm:w-20 bg-[#c5a059] rounded-full"></div>
-                    </div>
+                    </div> 
 
                     {/* Description */}
                     <p className="text-gray-300 leading-relaxed mb-8 sm:mb-10 text-sm sm:text-base">
@@ -204,85 +200,67 @@ const Service = () => {
                       وتأسيس الشركات بكافة أنواعها،
                       مع ضمان الامتثال الكامل للقوانين واللوائح
                       المحلية والدولية لحماية مصالح أعمالكم.
-                    </p>
+                    </p> 
 
                     {/* CTA Button */}
                     <NavLink to="/BookingDate">
-                     <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
-                      احجز استشارة لهذه الخدمة
-                    </button>
-                    </NavLink>
-                    
-                  </div>
-                </dialog>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+                      <button className="w-full py-3 sm:py-4 bg-[#c5a059] hover:bg-[#b38f4d] text-[#111827] font-bold rounded-xl sm:rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#c5a059]/20">
+                        احجز استشارة لهذه الخدمة
+                      </button>
+                    </NavLink> 
+
+                 
+      
+    </div>
+  </div>
+)}
+</section>
 
       {/* ================= Corporate Law ================= */}
-      <section className="bg-[#0e1a2b] py-20 px-6" dir="rtl">
+      <section className="bg-[#0e1a2b] py-20 px-6 overflow-x-hidden" dir="rtl">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
+          {/* النص يأتي من الأعلى */}
           <motion.div
-            variants={fadeRight}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ y: -50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="lg:w-1/2 text-right"
           >
-            <h2 className="text-white text-4xl font-bold mb-6">
-              قانون الشركات والعقود
-            </h2>
-
+            <h2 className="text-white text-4xl font-bold mb-6">قانون الشركات والعقود</h2>
             <p className="text-gray-400 mb-8 leading-relaxed">
               نقدم حلولاً قانونية شاملة لدعم نمو أعمالكم وحمايتها من المخاطر القانونية المحتملة.
             </p>
-
-            <motion.ul
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="space-y-4 mb-10"
-            >
-              {[
-                "صياغة ومراجعة العقود التجارية الدولية والمحلية.",
-                "تمثيل الشركات في المفاوضات وعمليات الاستحواذ.",
-                "الاستشارات الضريبية والتنظيمية للشركات الكبرى."
-              ].map((item, i) => (
-                <motion.li
-                  key={i}
-                  variants={fadeUp}
-                  className="flex items-center gap-3 text-gray-300"
-                >
+            <ul className="space-y-4 mb-10">
+              {["صياغة ومراجعة العقود التجارية الدولية والمحلية.", "تمثيل الشركات في المفاوضات وعمليات الاستحواذ.", "الاستشارات الضريبية والتنظيمية للشركات الكبرى."].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-gray-300">
                   <span>{item}</span>
-                </motion.li>
+                </li>
               ))}
-            </motion.ul>
-
-            <Link to={"/BookingDate"}>  <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#c5a059] text-[#0a1120] px-8 py-3 font-bold cursor-pointer"
-            >
-              احجز استشارة لهذه الخدمة
-            </motion.button></Link>
+            </ul>
+            <Link to={"/BookingDate"}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#c5a059] text-[#0a1120] px-8 py-3 font-bold cursor-pointer"
+              >
+                احجز استشارة لهذه الخدمة
+              </motion.button>
+            </Link>
           </motion.div>
 
+          {/* الصورة تأتي من اليسار */}
           <motion.div
-            variants={fadeLeft}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="lg:w-1/2"
           >
             <img
               src={lawerphoto}
-              alt=""
+              alt="قانون الشركات"
               className="rounded-sm shadow-2xl border border-gray-800"
             />
           </motion.div>
