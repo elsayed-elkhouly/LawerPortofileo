@@ -36,23 +36,31 @@ const BookDate = () => {
     ];
     const { handleSubmit, register, reset ,formState: { errors } } = useForm({
     })
-    async function Booked(values) {
-        setisLoding(true)
-        try {
-            const res = await axios.post("https://lawersystem-production.up.railway.app/appointment/BOOKED", values)
-            console.log(res.data.message);
-            toast.success("تم الحجز بنجاح")
-            setisLoding(false)
-            reset()
-        } catch (error) {     
-            console.log("Response Data:", error.response?.data.message);
-            toast.error(error.response?.data.message)
-            setisLoding(false)
-        }
+     async function Booked(values) {
+    setisLoding(true);
+    try {
+      const res = await axios.post(
+        "https://lawersystem-production.up.railway.app/appointment/BOOKED",
+        values
+      );
+      toast.success("تم الحجز بنجاح");
+      window.location.reload()
+      reset({
+        fullName: "",
+        phone: "",
+        email: "",
+        description: "",
+        caseType: "",
+        slot: "",
+      });
 
-
-
+    } catch (error) {
+      console.log("Response Data:", error.response?.data.message);
+      toast.error(error.response?.data.message || "حدث خطأ ما");
+    } finally {
+      setisLoding(false);
     }
+  }
 
     async function GetTime() {
         const data = await axios.get("https://lawersystem-production.up.railway.app/slots/available")
@@ -91,137 +99,143 @@ const BookDate = () => {
                     <div className="lg:col-span-2 bg-[#0a111a] border border-gray-800/50 rounded-3xl p-5 sm:p-6 md:p-10 lg:p-12 shadow-2xl">
                         <div className="border border-gray-800/50 rounded-3xl p-8 md:p-12 shadow-2xl">
                             <form onSubmit={handleSubmit(Booked)} className="space-y-8">
-                                {/* Row 1: Name and Phone */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Name */}
-                                    <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">الاسم الكامل</label>
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                placeholder="أدخل اسمك الثلاثي"
-                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                {...register("fullName", { required: "الاسم مطلوب" })}
-                                            />
-                                            <BiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                        </div>
-                                        {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
-                                    </div>
+      {/* Row 1: Name and Phone */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm block mr-1">الاسم الكامل</label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="أدخل اسمك الثلاثي"
+              className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 outline-none transition-all placeholder:text-gray-600"
+              {...register("fullName", { required: "الاسم مطلوب" })}
+            />
+            <BiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+          </div>
+          {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+        </div>
 
-                                    {/* Phone */}
-                                    <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">رقم الهاتف</label>
-                                        <div className="relative flex">
-                                            <div className="relative flex-1">
-                                                <input
-                                                    type="tel"
-                                                    placeholder="0123456789"
-                                                    className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                    {...register("phone", { required: "رقم الهاتف مطلوب" })}
-                                                />
-                                                <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            </div>
-                                            <div className="bg-[#111927] border border-gray-700/50 border-r-0 rounded-l-xl px-4 flex items-center text-gray-300 text-sm">
-                                                20+
-                                            </div>
-                                        </div>
-                                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
-                                    </div>
-                                </div>
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm block mr-1">رقم الهاتف</label>
+          <div className="relative flex">
+            <div className="relative flex-1">
+              <input
+                type="tel"
+                placeholder="0123456789"
+                className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
+                {...register("phone", { required: "رقم الهاتف مطلوب" })}
+              />
+              <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+            </div>
+            <div className="bg-[#111927] border border-gray-700/50 border-r-0 rounded-l-xl px-4 flex items-center text-gray-300 text-sm">
+              20+
+            </div>
+          </div>
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+        </div>
+      </div>
 
-                                {/* Row 2: Email and Service Type */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Email */}
-                                    <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">البريد الإلكتروني</label>
-                                        <div className="relative">
-                                            <input
-                                                type="email"
-                                                placeholder="example@domain.com"
-                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 text-left"
-                                                {...register("email", { required: "البريد الإلكتروني مطلوب" })}
-                                            />
-                                            <RiMicAiLine className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                        </div>
-                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
-                                    </div>
+      {/* Row 2: Email and Service Type */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm block mr-1">البريد الإلكتروني</label>
+          <div className="relative">
+            <input
+              type="email"
+              placeholder="example@domain.com"
+              className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 text-left"
+              {...register("email", { required: "البريد الإلكتروني مطلوب" })}
+            />
+            <RiMicAiLine className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+          </div>
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+        </div>
 
-                                    {/* Case Type */}
-                                    <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">نوع الخدمة القانونية</label>
-                                        <div className="relative">
-                                            <select
-                                                {...register("caseType", { required: "اختر نوع الاستشارة" })}
-                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
-                                            >
-                                                <option value="" disabled selected>
-                                                    اختر نوع الاستشارة
-                                                </option>
-                                                {casee.filter(cas => cas.isActive)
-                                                    .map((cas, index) => (
-                                                        <option key={index} value={cas._id}>{cas.name}</option>
-                                                    ))}
-                                            </select>
-                                            <SlCalender className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            <BsChevronDown className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
-                                        </div>
-                                        {errors.caseType && <p className="text-red-500 text-xs mt-1">{errors.caseType.message}</p>}
-                                    </div>
-                                </div>
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm block mr-1">نوع الخدمة القانونية</label>
+          <div className="relative">
+            <select
+              {...register("caseType", { required: "اختر نوع الاستشارة" })}
+              defaultValue=""
+              className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
+            >
+              <option value="" disabled>
+                اختر نوع الاستشارة
+              </option>
+              {casee.filter(cas => cas.isActive).map((cas, index) => (
+                <option key={index} value={cas._id}>{cas.name}</option>
+              ))}
+            </select>
+            <SlCalender className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+            <BsChevronDown className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+          </div>
+          {errors.caseType && <p className="text-red-500 text-xs mt-1">{errors.caseType.message}</p>}
+        </div>
+      </div>
 
-                                {/* Row 3: Date and Time */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">الوقت المتاح</label>
-                                        <div className="relative">
-                                            <select
-                                                {...register("slot", { required: "اختر الوقت" })}
-                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
-                                            >
-                                                <option value="" disabled selected>
-                                                    اختر الوقت
-                                                </option>
+      {/* Row 3: Date and Time */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm block mr-1">الوقت المتاح</label>
+          <div className="relative">
+            <select
+              {...register("slot", { required: "اختر الوقت" })}
+              defaultValue=""
+              className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
+            >
+              <option value="" disabled>
+                اختر الوقت
+              </option>
+              {slots.map((slot, index) => {
+                const startDate = new Date(slot.startAt);
+                const endAtDate = new Date(slot.endAt);
+                const formattedStart = startDate.toLocaleString("ar-EG", {
+                  day: "2-digit",
+                  month: "long",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                  timeZone: "Africa/Cairo",
+                });
+                const formattedEnd = endAtDate.toLocaleString("ar-EG", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                });
+                return (
+                  <option key={index} value={slot.id}>
+                    {formattedStart} / {formattedEnd}
+                  </option>
+                );
+              })}
+            </select>
+            <CgLockUnlock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+            <BiChevronDownCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+          </div>
+          {errors.slot && <p className="text-red-500 text-xs mt-1">{errors.slot.message}</p>}
+        </div>
+      </div>
 
-                                                {slots.map((slot, index) => {
-                                                    const startDate = new Date(slot.startAt);
-                                                    const endAtDate = new Date(slot.endAt);
-                                                    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
-                                                    const options2 = {
-                                                        day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit", hour12: true, timeZone: "Africa/Cairo"
-                                                    };
-                                                    const formattedDate = startDate.toLocaleString("ar-EG", options2);
-                                                    const formattedDate2 = endAtDate.toLocaleString("ar-EG", options);
-                                                    return (
-                                                        <option key={index} value={slot.id}>
-                                                            {formattedDate} / {formattedDate2}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                            <CgLockUnlock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            <BiChevronDownCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
-                                        </div>
-                                        {errors.slot && <p className="text-red-500 text-xs mt-1">{errors.slot.message}</p>}
-                                    </div>
-                                </div>
+      {/* Description */}
+      <div className="space-y-2">
+        <label className="text-gray-300 text-sm block mr-1">وصف القضية / الموضوع</label>
+        <textarea
+          rows="4"
+          placeholder="يرجى كتابة تفاصيل مختصرة عن موضوع الاستشارة..."
+          className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-6 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 resize-none"
+          {...register("description", { required: "يرجى كتابة وصف للقضية" })}
+        ></textarea>
+        {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
+      </div>
 
-                                {/* Description */}
-                                <div className="space-y-2">
-                                    <label className="text-gray-300 text-sm block mr-1">وصف القضية / الموضوع</label>
-                                    <textarea
-                                        rows="4"
-                                        placeholder="يرجى كتابة تفاصيل مختصرة عن موضوع الاستشارة لنقوم بتوجيهك للمستشار المناسب..."
-                                        className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-6 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 resize-none"
-                                        {...register("description", { required: "يرجى كتابة وصف للقضية" })}
-                                    ></textarea>
-                                    {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
-                                </div>
-
-                                {/* Submit */}
-                                <button className="w-full bg-[#c9a152] hover:bg-[#b89144] text-[#0a111a] font-bold py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-900/10">
-                                    {isloding ? <span className="loading loading-infinity loading-xl"></span> : "تأكيد الحجز"}
-                                </button>
-                            </form>
+      {/* Submit */}
+      <button
+        type="submit"
+        className="w-full cursor-pointer bg-[#c9a152] hover:bg-[#b89144] text-[#0a111a] font-bold py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-900/10"
+      >
+        {isloding ? <span className="loading loading-infinity loading-xl"></span> : "تأكيد الحجز"}
+      </button>
+    </form>
                         </div>
                     </div>
                     
