@@ -177,7 +177,7 @@ const Service = () => {
     onClick={() => setSelectedService(null)}   // 👈 يقفل لو ضغطت برا
   >
     <div
-      className="bg-[#0d1626] p-8 rounded-lg w-[90%] md:w-[500px] relative border border-gray-800 shadow-2xl rounded-3xl sm:rounded-[2.5rem]"
+      className="bg-[#0d1626] p-8 rounded-lg w-[90%] md:w-125 relative border border-gray-800 shadow-2xl sm:rounded-[2.5rem]"
       onClick={(e) => e.stopPropagation()}     // 👈 يمنع القفل لو ضغطت جوه
     >
       

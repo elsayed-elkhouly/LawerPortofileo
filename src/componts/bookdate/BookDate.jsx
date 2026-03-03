@@ -1,16 +1,21 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { BiCalendarAlt, BiCheckCircle, BiChevronDownCircle, BiLockAlt, BiMapPin, BiPhoneCall, BiUser, } from 'react-icons/bi'
+import toast from 'react-hot-toast'
+import { BiCheckCircle, BiChevronDownCircle, BiLockAlt, BiMapPin, BiPhoneCall, BiUser, } from 'react-icons/bi'
 import { BsChevronDown } from 'react-icons/bs'
-import { CgLock, CgLockUnlock } from 'react-icons/cg'
+import { CgLockUnlock } from 'react-icons/cg'
 import { GoShieldCheck } from 'react-icons/go'
 import { HiShieldCheck } from 'react-icons/hi2'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdOutlineChat } from 'react-icons/md'
-import { RiMicAiLine, RiMvAiLine } from 'react-icons/ri'
+import { RiMicAiLine } from 'react-icons/ri'
 import { SlCalender } from 'react-icons/sl'
 
 const BookDate = () => {
+    const [slots, setSlots] = useState([])
+    const [casee, setCase] = useState([])
+    const [isloding, setisLoding] = useState(false)
     const features = [
         {
             title: "رد سريع خلال 24 ساعة",
@@ -29,168 +34,198 @@ const BookDate = () => {
             desc: "سجل حافل بالنجاحات في أصعب القضايا التجارية والجنائية.",
         },
     ];
-    const { handleSubmit, register } = useForm({
-
+    const { handleSubmit, register, reset ,formState: { errors } } = useForm({
     })
-
-    async function Signup(values) {
-        console.log(values);
+    async function Booked(values) {
+        setisLoding(true)
+        try {
+            const res = await axios.post("https://lawersystem-production.up.railway.app/appointment/BOOKED", values)
+            console.log(res.data.message);
+            toast.success("تم الحجز بنجاح")
+            setisLoding(false)
+            reset()
+        } catch (error) {     
+            console.log("Response Data:", error.response?.data.message);
+            toast.error(error.response?.data.message)
+            setisLoding(false)
+        }
 
 
 
     }
+
+    async function GetTime() {
+        const data = await axios.get("https://lawersystem-production.up.railway.app/slots/available")
+        setSlots(data.data.slots)
+    }
+
+    async function GetActiveCase() {
+        const data = await axios.get("https://lawersystem-production.up.railway.app/CaseType/")
+        setCase(data.data.caseTypes);
+        console.log(data);
+    }
+
+    useEffect(() => {
+        GetTime();
+        GetActiveCase()
+    }, []);
     return (
         <>
-            <section
-                dir="rtl"
-                className="bg-[#0e1a2b] font-sans py-10 px-4 sm:px-6 md:py-14 lg:min-h-screen lg:flex lg:items-center"
-            >
-                <div className="w-full max-w-7xl mx-auto">
+             <section
+            dir="rtl"
+            className="bg-[#0e1a2b] font-sans py-10 px-4 sm:px-6 md:py-14 lg:min-h-screen lg:flex lg:items-center"
+        >
+            <div className="w-full max-w-7xl mx-auto">
+                {/* Header */}
+                <div className="text-right mb-10 mt-20">
+                    <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+                        احجز موعدك الآن
+                    </h1>
+                    <p className="text-gray-400 text-xs sm:text-sm max-w-lg leading-relaxed">
+                        املأ البيانات وسنتواصل معك لتأكيد الموعد خلال 24 ساعة.
+                    </p>
+                </div>
 
-                    {/* Header */}
-                    <div className="text-right mb-10 mt-20">
-                        <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
-                            احجز موعدك الآن
-                        </h1>
-                        <p className="text-gray-400 text-xs sm:text-sm max-w-lg leading-relaxed">
-                            املأ البيانات وسنتواصل معك لتأكيد الموعد خلال 24 ساعة.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-                        {/* FORM */}
-                        <div className="lg:col-span-2 bg-[#0a111a] border border-gray-800/50 rounded-3xl p-5 sm:p-6 md:p-10 lg:p-12 shadow-2xl">
-                            <div className=" border border-gray-800/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-                                <form onSubmit={handleSubmit(Signup)}
-                                    className="space-y-8">
-                                    {/* Row 1: Name and Phone */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">الاسم الكامل</label>
-                                            <div className="relative">
-                                                <input
-                                                    type="text"
-                                                    placeholder="أدخل اسمك الثلاثي"
-                                                    className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                {...register("name")}
-                                                />
-                                                <BiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">رقم الهاتف</label>
-                                            <div className="relative flex">
-                                                <div className="relative flex-1">
-                                                    <input
-                                                        type="tel"
-                                                        placeholder="5xxxxxxx"
-                                                        className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                   {...register("phone")} />
-                                                    <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                                </div>
-                                                <div className="bg-[#111927] border border-gray-700/50 border-r-0 rounded-l-xl px-4 flex items-center text-gray-300 text-sm">
-                                                    +01
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Row 2: Email and Service Type */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">البريد الإلكتروني</label>
-                                            <div className="relative">
-                                                <input
-                                                    type="email"
-                                                    placeholder="example@domain.com"
-                                                    className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 text-left"
-                                               {...register("email")} />
-                                                <RiMicAiLine className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">نوع الخدمة القانونية</label>
-                                            <div className="relative">
-                                                <select className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer">
-                                                    <option value="" disabled selected>
-                                                        اختر نوع الاستشارة
-                                                    </option>
-                                                    <option>استشارة جنائية</option>
-                                                    <option>استشارة عمالية</option>
-                                                    <option>قضايا الأحوال الشخصية</option>
-                                                </select>
-                                                <SlCalender className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                                <BsChevronDown className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Row 3: Date and Time */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">التاريخ المفضل</label>
-                                            <div className="relative">
-                                                <input
-                                                    type="text"
-                                                    placeholder="mm/dd/yyyy"
-                                                    onFocus={(e) => (e.target.type = "date")}
-                                                    className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                               {...register("date")} />
-                                                <BiCalendarAlt className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-gray-300 text-sm block mr-1">الوقت المتاح</label>
-                                            <div className="relative">
-                                                <select className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer">
-                                                    <option value="" disabled selected>
-                                                        اختر الوقت
-                                                    </option>
-                                                    <option>09:00 AM - 12:00 PM</option>
-                                                    <option>01:00 PM - 04:00 PM</option>
-                                               
-                                                </select>
-                                                <CgLockUnlock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                                                <BiChevronDownCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Description Textarea */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+                    {/* FORM */}
+                    <div className="lg:col-span-2 bg-[#0a111a] border border-gray-800/50 rounded-3xl p-5 sm:p-6 md:p-10 lg:p-12 shadow-2xl">
+                        <div className="border border-gray-800/50 rounded-3xl p-8 md:p-12 shadow-2xl">
+                            <form onSubmit={handleSubmit(Booked)} className="space-y-8">
+                                {/* Row 1: Name and Phone */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/* Name */}
                                     <div className="space-y-2">
-                                        <label className="text-gray-300 text-sm block mr-1">وصف القضية / الموضوع</label>
-                                        <textarea
-                                            rows="4"
-                                            placeholder="يرجى كتابة تفاصيل مختصرة عن موضوع الاستشارة لنقوم بتوجيهك للمستشار المناسب..."
-                                            className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-6 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 resize-none"
-                                        {...register("text")}></textarea>
+                                        <label className="text-gray-300 text-sm block mr-1">الاسم الكامل</label>
+                                        <div className="relative">
+                                            <input
+                                                type="text"
+                                                placeholder="أدخل اسمك الثلاثي"
+                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 outline-none transition-all placeholder:text-gray-600"
+                                                {...register("fullName", { required: "الاسم مطلوب" })}
+                                            />
+                                            <BiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                                        </div>
+                                        {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
                                     </div>
 
-                                    {/* Submit Button */}
-                                    <button className="w-full bg-[#c9a152] hover:bg-[#b89144] text-[#0a111a] font-bold py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-900/10">
-                                        تأكيد الحجز
-                                    </button>
-
-                                    {/* Footer Labels */}
-                                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-800/30">
-                                        <div className="flex items-center gap-2 text-[10px] text-gray-500">
-                                            <BiLockAlt className="w-3 h-3" />
-                                            <span>بالضغط على تأكيد الحجز أنت توافق على سياسة الخصوصية وشروط الاستخدام</span>
+                                    {/* Phone */}
+                                    <div className="space-y-2">
+                                        <label className="text-gray-300 text-sm block mr-1">رقم الهاتف</label>
+                                        <div className="relative flex">
+                                            <div className="relative flex-1">
+                                                <input
+                                                    type="tel"
+                                                    placeholder="0123456789"
+                                                    className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
+                                                    {...register("phone", { required: "رقم الهاتف مطلوب" })}
+                                                />
+                                                <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                                            </div>
+                                            <div className="bg-[#111927] border border-gray-700/50 border-r-0 rounded-l-xl px-4 flex items-center text-gray-300 text-sm">
+                                                20+
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-2 bg-[#111927] px-3 py-1.5 rounded-full border border-green-900/30">
-                                            <HiShieldCheck className="w-4 h-4 text-green-500" />
-                                            <span className="text-[10px] text-gray-300 uppercase tracking-widest font-bold">
-                                                100% Secure Transaction
-                                            </span>
-                                        </div>
+                                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+
+                                {/* Row 2: Email and Service Type */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/* Email */}
+                                    <div className="space-y-2">
+                                        <label className="text-gray-300 text-sm block mr-1">البريد الإلكتروني</label>
+                                        <div className="relative">
+                                            <input
+                                                type="email"
+                                                placeholder="example@domain.com"
+                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 text-left"
+                                                {...register("email", { required: "البريد الإلكتروني مطلوب" })}
+                                            />
+                                            <RiMicAiLine className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                                        </div>
+                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+                                    </div>
+
+                                    {/* Case Type */}
+                                    <div className="space-y-2">
+                                        <label className="text-gray-300 text-sm block mr-1">نوع الخدمة القانونية</label>
+                                        <div className="relative">
+                                            <select
+                                                {...register("caseType", { required: "اختر نوع الاستشارة" })}
+                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
+                                            >
+                                                <option value="" disabled selected>
+                                                    اختر نوع الاستشارة
+                                                </option>
+                                                {casee.filter(cas => cas.isActive)
+                                                    .map((cas, index) => (
+                                                        <option key={index} value={cas._id}>{cas.name}</option>
+                                                    ))}
+                                            </select>
+                                            <SlCalender className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                                            <BsChevronDown className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                                        </div>
+                                        {errors.caseType && <p className="text-red-500 text-xs mt-1">{errors.caseType.message}</p>}
+                                    </div>
+                                </div>
+
+                                {/* Row 3: Date and Time */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-gray-300 text-sm block mr-1">الوقت المتاح</label>
+                                        <div className="relative">
+                                            <select
+                                                {...register("slot", { required: "اختر الوقت" })}
+                                                className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-12 text-white appearance-none focus:border-yellow-600 outline-none transition-all cursor-pointer"
+                                            >
+                                                <option value="" disabled selected>
+                                                    اختر الوقت
+                                                </option>
+
+                                                {slots.map((slot, index) => {
+                                                    const startDate = new Date(slot.startAt);
+                                                    const endAtDate = new Date(slot.endAt);
+                                                    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+                                                    const options2 = {
+                                                        day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit", hour12: true, timeZone: "Africa/Cairo"
+                                                    };
+                                                    const formattedDate = startDate.toLocaleString("ar-EG", options2);
+                                                    const formattedDate2 = endAtDate.toLocaleString("ar-EG", options);
+                                                    return (
+                                                        <option key={index} value={slot.id}>
+                                                            {formattedDate} / {formattedDate2}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+                                            <CgLockUnlock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                                            <BiChevronDownCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                                        </div>
+                                        {errors.slot && <p className="text-red-500 text-xs mt-1">{errors.slot.message}</p>}
+                                    </div>
+                                </div>
+
+                                {/* Description */}
+                                <div className="space-y-2">
+                                    <label className="text-gray-300 text-sm block mr-1">وصف القضية / الموضوع</label>
+                                    <textarea
+                                        rows="4"
+                                        placeholder="يرجى كتابة تفاصيل مختصرة عن موضوع الاستشارة لنقوم بتوجيهك للمستشار المناسب..."
+                                        className="w-full bg-[#111927] border border-gray-700/50 rounded-xl py-4 px-6 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600 resize-none"
+                                        {...register("description", { required: "يرجى كتابة وصف للقضية" })}
+                                    ></textarea>
+                                    {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
+                                </div>
+
+                                {/* Submit */}
+                                <button className="w-full bg-[#c9a152] hover:bg-[#b89144] text-[#0a111a] font-bold py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-900/10">
+                                    {isloding ? <span className="loading loading-infinity loading-xl"></span> : "تأكيد الحجز"}
+                                </button>
+                            </form>
                         </div>
-                        {/* SIDEBAR */}
+                    </div>
+                    
+                     {/* SIDEBAR */}
                         <div className="flex flex-col gap-6 mt-6 lg:mt-0">
                             <div className="flex flex-col gap-6">
                                 {/* Why Choose Us */}
@@ -262,9 +297,9 @@ const BookDate = () => {
                                 </div>
                             </section>
                         </div>
-                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
         </>
 
     )
