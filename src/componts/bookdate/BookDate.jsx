@@ -78,26 +78,26 @@ const BookDate = () => {
         setCase(data.data.caseTypes);
         console.log(data);
     }
-      async function getData() {
+    async function getData() {
         try {
-          const res = await axios.get(
-            "https://lawersystem-production.up.railway.app/SettingsService/"
-          );
-          console.log("API:", res.data.Settings);
-          setSettings(res?.data?.Settings)
+            const res = await axios.get(
+                "https://lawersystem-production.up.railway.app/SettingsService/"
+            );
+            console.log("API:", res.data.Settings);
+            setSettings(res?.data?.Settings)
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
-    
-      useEffect(() => {
-       
-    
-    
-      }, [])
+    }
 
     useEffect(() => {
-         getData()
+
+
+
+    }, [])
+
+    useEffect(() => {
+        getData()
         GetTime();
         GetActiveCase()
     }, []);
@@ -147,7 +147,14 @@ const BookDate = () => {
                                                         type="tel"
                                                         placeholder="0123456789"
                                                         className="w-full bg-[#111927] border border-gray-700/50 rounded-r-xl py-4 px-12 text-white focus:border-yellow-600 outline-none transition-all placeholder:text-gray-600"
-                                                        {...register("phone", { required: "رقم الهاتف مطلوب" })}
+                                                        maxLength={11}
+                                                        {...register("phone", {
+                                                            required: "رقم الهاتف مطلوب",
+                                                            pattern: {
+                                                                value: /^[0-9]{11}$/,
+                                                                message: "رقم الهاتف يجب أن يكون 11 رقم",
+                                                            },
+                                                        })}
                                                     />
                                                     <BiPhoneCall className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
                                                 </div>
@@ -327,7 +334,7 @@ const BookDate = () => {
 
                                 <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
                                     <span className="text-black text-[10px]">
-                                         {settings?.addressDetail}  
+                                        {settings?.addressDetail}
                                     </span>
                                     <div className="bg-[#c9a152] p-1.5 rounded-full">
                                         <BiMapPin className="text-[#0a111a] w-3 h-3" />
