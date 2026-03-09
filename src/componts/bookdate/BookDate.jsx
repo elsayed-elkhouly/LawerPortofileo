@@ -16,6 +16,7 @@ const BookDate = () => {
     const [slots, setSlots] = useState([])
     const [casee, setCase] = useState([])
     const [isloding, setisLoding] = useState(false)
+    const [settings, setSettings] = useState(null);
     const features = [
         {
             title: "رد سريع خلال 24 ساعة",
@@ -77,8 +78,26 @@ const BookDate = () => {
         setCase(data.data.caseTypes);
         console.log(data);
     }
+      async function getData() {
+        try {
+          const res = await axios.get(
+            "https://lawersystem-production.up.railway.app/SettingsService/"
+          );
+          console.log("API:", res.data.Settings);
+          setSettings(res?.data?.Settings)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+      useEffect(() => {
+       
+    
+    
+      }, [])
 
     useEffect(() => {
+         getData()
         GetTime();
         GetActiveCase()
     }, []);
@@ -301,14 +320,14 @@ const BookDate = () => {
                             {/* Map */}
                             <section className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden group">
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d12361.64234913719!2d30.131227913794966!3d31.137101915871288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2seg!4v1771425151634!5m2!1sen!2seg"
+                                    src={settings?.mapEmbedUrl}
                                     className="w-full h-full"
                                     loading="lazy"
                                 ></iframe>
 
                                 <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
-                                    <span className="text-white text-[10px]">
-                                        البحيرة - كفر الدوار
+                                    <span className="text-black text-[10px]">
+                                         {settings?.addressDetail}  
                                     </span>
                                     <div className="bg-[#c9a152] p-1.5 rounded-full">
                                         <BiMapPin className="text-[#0a111a] w-3 h-3" />
