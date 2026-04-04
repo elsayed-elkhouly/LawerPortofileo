@@ -15,8 +15,5 @@ export default defineConfig({
     }),tailwindcss(),
     flowbiteReact()
   ],
-  server: {
-    port: 3000,
-    strictPort: true, // لو 3000 مش متاح هيقف بدل ما يغيره
-  },
+ 
 })

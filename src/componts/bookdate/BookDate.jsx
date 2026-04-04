@@ -11,6 +11,7 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { MdOutlineChat } from 'react-icons/md'
 import { RiMicAiLine } from 'react-icons/ri'
 import { SlCalender } from 'react-icons/sl'
+import api from '../../api/axios'
 
 const BookDate = () => {
     const [slots, setSlots] = useState([])
@@ -40,8 +41,8 @@ const BookDate = () => {
     async function Booked(values) {
         setisLoding(true);
         try {
-            const res = await axios.post(
-                "https://lawersystem-production.up.railway.app/appointment/BOOKED",
+            const res = await api.post(
+                "/appointment/BOOKED",
                 values
             );
 
@@ -69,19 +70,19 @@ const BookDate = () => {
     }
 
     async function GetTime() {
-        const data = await axios.get("https://lawersystem-production.up.railway.app/slots/available")
+        const data = await api.get("/slots/available")
         setSlots(data.data.slots)
     }
 
     async function GetActiveCase() {
-        const data = await axios.get("https://lawersystem-production.up.railway.app/CaseType/")
+        const data = await api.get("/CaseType/")
         setCase(data.data.caseTypes);
         console.log(data);
     }
     async function getData() {
         try {
-            const res = await axios.get(
-                "https://lawersystem-production.up.railway.app/SettingsService/"
+            const res = await api.get(
+                "/SettingsService/"
             );
             console.log("API:", res.data.Settings);
             setSettings(res?.data?.Settings)

@@ -2,12 +2,13 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaBalanceScale } from 'react-icons/fa'
 import { IoLocationOutline, IoPhonePortraitOutline } from 'react-icons/io5'
+import api from '../../api/axios'
 const Footer = () => {
   const [settings, setSettings] = useState(null);
   async function getData() {
     try {
-      const res = await axios.get(
-        "https://lawersystem-production.up.railway.app/SettingsService/"
+      const res = await api.get(
+        "/SettingsService/"
       );
       console.log("API:", res.data.Settings);
       setSettings(res?.data?.Settings)
